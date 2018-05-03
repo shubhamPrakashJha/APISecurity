@@ -18,8 +18,8 @@ class User(Base):
 		self.password_hash = custom_app_context.hash(password)
 
 	def verify_password(self, password):
-		print "verify the hash value of given password with stored hash value"
-
+		# print "verify the hash value of given password with stored hash value"
+		return custom_app_context.verify(password, self.password_hash)
 
 engine = create_engine('sqlite:///users.db')
 
