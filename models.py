@@ -13,6 +13,12 @@ class User(Base):
 	username = Column(String(32), index=True)
 	password_hash = Column(String(64))
 
+	def hash_password(self, password):
+		print "create hash value of the password and store in database"
+
+	def verify_password(self, password):
+		print "verify the hash value of given password with stored hash value"
+
 
 engine = create_engine('sqlite:///users.db')
 
