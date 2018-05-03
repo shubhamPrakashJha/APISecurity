@@ -9,6 +9,9 @@ Base = declarative_base()
 
 class User(Base):
 	__tablename__ = 'user'
+	id = Column(Integer, primary_key=True)
+	username = Column(String(32), index=True)
+	password_hash = Column(String(64))
 
 
 engine = create_engine('sqlite:///users.db')
