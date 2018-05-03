@@ -14,7 +14,8 @@ class User(Base):
 	password_hash = Column(String(64))
 
 	def hash_password(self, password):
-		print "create hash value of the password and store in database"
+		# print "create hash value of the password and store in database"
+		self.password_hash = custom_app_context.hash(password)
 
 	def verify_password(self, password):
 		print "verify the hash value of given password with stored hash value"
