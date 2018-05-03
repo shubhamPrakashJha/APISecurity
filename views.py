@@ -15,7 +15,9 @@ app = Flask(__name__)
 
 @app.route('/users', methods=['POST'])
 def new_user():
-	return "create New User"
+	# return "create New User"
+	username = request.json.get('username')
+	password = request.json.get('password')
 
 if __name__ == '__main__':
 	app.debug = True
