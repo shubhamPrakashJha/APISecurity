@@ -13,11 +13,24 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 app = Flask(__name__)
 
+
 @app.route('/users', methods=['POST'])
 def new_user():
 	# return "create New User"
 	username = request.json.get('username')
 	password = request.json.get('password')
+	if username is None or password is None:
+		abort(400)
+	old_user = session.query("User").filter_by(username=username).first()
+	if old_user is not None:
+		abort(400)
+	user = User(username=username)
+	user.hash_password(password)
+	session.add(user)
+	session.commit()
+	return jsonify(
+		{"username": user.username}
+	), 201
 
 if __name__ == '__main__':
 	app.debug = True
