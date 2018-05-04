@@ -1,4 +1,4 @@
-from database_setup import Base, User
+from models import Base, User
 from flask import Flask, jsonify, request, url_for, abort
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
@@ -21,8 +21,7 @@ def new_user():
 	password = request.json.get('password')
 	if username is None or password is None:
 		abort(400)
-	old_user = session.query("User").filter_by(username=username).first()
-	if old_user is not None:
+	if session.query(User).filter_by(username=username).first() is not None:
 		abort(400)
 	user = User(username=username)
 	user.hash_password(password)
@@ -31,6 +30,8 @@ def new_user():
 	return jsonify(
 		{"username": user.username}
 	), 201
+
+
 
 if __name__ == '__main__':
 	app.debug = True
